@@ -2782,11 +2782,6 @@ impl FpgaBitfile {
         include_str!("roboRIO_FPGA_2023_23.0.0.lvbitx")
     }
 
-    #[cfg(target_arch = "arm")]
-    pub const fn location() -> &'static str {
-        "/usr/local/frc/bitfiles/roboRIO_FPGA_2023_23.0.0.lvbitx"
-    }
-
     #[cfg(not(target_arch = "arm"))]
     pub const fn resource() -> &'static str {
         "rio://172.22.11.2/RIO0"
@@ -2808,7 +2803,6 @@ impl FpgaBitfile {
     #[cfg(target_arch = "arm")]
     pub fn session_builder() -> Result<ni_fpga::SessionBuilder, ni_fpga::Error> {
         ni_fpga::SessionBuilder::new()
-            .bitfile_path(Self::location())?
             .ignore_signature()
             .resource(Self::resource())
     }

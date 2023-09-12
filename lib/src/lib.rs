@@ -21,7 +21,7 @@ pub mod objects {
     pub mod sys_watchdog;
 }
 
-mod registers;
+pub mod registers;
 mod strobe;
 
 pub use strobe::StrobeRegister;
@@ -44,8 +44,22 @@ pub(crate) fn try_unwrap_register<T>(reg: Option<T>, _name: impl AsRef<str>) -> 
     reg.ok_or(Error::ResourceAlreadyTaken)
 }
 
-pub fn open_fpga() -> Result<(FpgaBitfile, Session<ArcStorage>), Error> {
+#[cfg(not(target_arch = "arm"))]
+pub fn open_fpga(
+    _bitfile_location: impl AsRef<str>,
+) -> Result<(FpgaBitfile, Session<ArcStorage>), Error> {
     let session = FpgaBitfile::session_builder()?.build_arc()?;
+    let bitfile = FpgaBitfile::take(&session)?;
+    Ok((bitfile, session))
+}
+
+#[cfg(target_arch = "arm")]
+pub fn open_fpga(
+    bitfile_location: impl AsRef<str>,
+) -> Result<(FpgaBitfile, Session<ArcStorage>), Error> {
+    let session = FpgaBitfile::session_builder()?
+        .bitfile_path(bitfile_location)?
+        .build_arc()?;
     let bitfile = FpgaBitfile::take(&session)?;
     Ok((bitfile, session))
 }
