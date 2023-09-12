@@ -2,6 +2,8 @@ pub mod objects {
     pub mod global;
     pub mod duty_cycle;
     pub mod hmb;
+    pub mod led;
+    pub mod sys_watchdog;
 }
 
 mod registers;
