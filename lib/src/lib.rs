@@ -14,8 +14,10 @@ pub mod objects {
     pub mod hmb;
     pub mod interrupt;
     pub mod led;
+    pub mod power;
     pub mod pwm;
     pub mod relay;
+    pub mod spi;
     pub mod sys_watchdog;
 }
 
