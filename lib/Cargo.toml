@@ -1,0 +1,10 @@
+[package]
+name = "chipobject-rs"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+ni-fpga = { git = "https://github.com/ThadHouse/ni-fpga-rs.git", branch = "dlopenapi" }
+ni-fpga-macros = { git = "https://github.com/ThadHouse/ni-fpga-rs.git", branch = "dlopenapi" }
