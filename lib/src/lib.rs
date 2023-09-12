@@ -1,20 +1,35 @@
 pub mod objects {
-    pub mod global;
+    pub mod accel;
+    pub mod accumulator;
+    pub mod alarm;
+    pub mod analog_input;
+    pub mod analog_output;
+    pub mod analog_trigger;
+    pub mod counter;
+    pub mod dio;
+    pub mod dma;
     pub mod duty_cycle;
+    pub mod encoder;
+    pub mod global;
     pub mod hmb;
+    pub mod interrupt;
     pub mod led;
+    pub mod pwm;
+    pub mod relay;
     pub mod sys_watchdog;
 }
 
 mod registers;
+mod strobe;
+
+pub use strobe::StrobeRegister;
 
 pub use ni_fpga;
 
 type Register<T, P> = ni_fpga::Register<T, P, StoredOffset>;
 
-use ni_fpga::{StoredOffset, Error, Session, session_lifetimes::ArcStorage};
+use ni_fpga::{session_lifetimes::ArcStorage, Error, Session, StoredOffset};
 use registers::FpgaBitfile;
-
 
 #[macro_export]
 macro_rules! take_register {

@@ -1,6 +1,14 @@
 use std::{thread, time::Duration};
 
-use chipobject_rs::{open_fpga, objects::{global::Global, hmb::Hmb, duty_cycle::{NUM_DUTY_CYCLE_INTERFACES, DutyCycle}}, ni_fpga::{RegisterRead, RegisterWrite, HmbAccess}};
+use chipobject_rs::{
+    ni_fpga::{HmbAccess, RegisterRead, RegisterWrite},
+    objects::{
+        duty_cycle::{DutyCycle, NUM_DUTY_CYCLE_INTERFACES},
+        global::Global,
+        hmb::Hmb,
+    },
+    open_fpga,
+};
 
 fn main() -> anyhow::Result<()> {
     let (mut bitfile, session) = open_fpga()?;
@@ -17,7 +25,6 @@ fn main() -> anyhow::Result<()> {
     hmb.config.write(&session, &c)?;
 
     let mem = unsafe { session.open_hmb(hmb.memory_definition.name)? };
-
 
     loop {
         let result = globals.local_time_lower.read(&session)?;
